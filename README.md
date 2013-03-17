@@ -18,17 +18,25 @@ they are a few minutes out of date.
 
 ### Usage
 
-Amnesic.start(bucket, ttl) - Sets up the bucket if it doesn't exist, if it does, sets the ttl.
+**Amnesic.start(bucket, ttl)**
 
-Amnesic.get(bucket, key, value) 
-	See if Amnesic remembers a value, for given key, bucket. 
-	Returns 
-		{:remembered, Value}
-		{:forgot}
+Sets up the bucket if it doesn't exist, if it does, sets the ttl.
 
-Amnesic.set(bucket, key, value)
-	Tell Amnesic about a value for a given key and bucket.
-	It will remember, for awhile.
+**Amnesic.get(bucket, key, value)** 
+
+See if Amnesic remembers a value, for given key, bucket. 
+	
+Returns 
+
+{:remembered, Value}
+
+{:forgot}
+
+**Amnesic.set(bucket, key, value)**
+
+Tell Amnesic about a value for a given key and bucket.
+
+It will remember, for awhile.
 	
 
 
