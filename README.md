@@ -42,8 +42,12 @@ It will remember, for awhile.
 
 #### RDD - Readme Driven Development
 
-TODO:
--- Implement start to set up tables, maintain a record of existing tables.
--- Implement get and set
--- Make process that goes Enums over each table, checking each record. Each record has a field
--- Support multiple named caches.
+**TODO:**
+
+1. Implement start to set up tables, maintain a record of existing tables.
+
+2. Implement get and set
+
+3. Make process that goes Enums over each table, checking each record. Each record has a field
+
+4. Support multiple named caches.
