@@ -4,14 +4,18 @@ _Members check in, but they don't check out._
 
 The Forgetful Cache.  Simple elixir cache that ejects members before too long.
 
-**amnesic** maintains an in memory table (probably HashDict backed by ETS) of key/value pairs. 
-When started, amnesic needs to know how good of a memory to have. Given this figure, it 
-spawns a process that periodically goes thru the table and cleans out any member that 
-was there during its last run. 
+**amnesic** maintains an in memory table of key/value pairs.  When started, amnesic
+needs to know how good of a memory to have. Given this figure, it spawns a process 
+that periodically goes thru the table and cleans out any member that hasn't been 
+requested since its last run. This is a simple form of LRU. It can also be set to
+re-fetch items that have gotten stale, using a supplied callback. 
 
-It's meant that you use this for data that doesn't change very often (and its ok if it is out 
-of date as much as the length of the timer you set up), but that is read very often, to 
-minimize hitting a more resource intensive answer to your query.  
+### Purpose
+
+This is meant improve performance in situations where you're frequently fetching the 
+same data from a database.  Presumably the database is on another machine, and reading
+memory is vastly faster than going over the network.  Naturally, the data can get 
+stale, and so even frequently requested data needs to be updated periodically.
 
 Canonical example: Caching DNS records.  They change rarely, but are read a lot, and it's ok if
 they are a few minutes out of date.
@@ -53,9 +57,10 @@ data source, depending on how fast it is.
 **TODO:**
 
 0. Consider a redesign.  We can use CAS to know if a record has been updated. So, really there are two goals for this library:
- a. to keep from just continuously accumulating records that aren't being used.
+ a. to keep from just continuously accumulating records that aren't being used - so purge records that haven't been requested in awhile.
  b. to refresh records that have been updated in the db, while keeping those that haven't around (since compilation is presumably heavy.)
-
+ c. Not to overrun memory.
+ 
 To accomplish both goals we:
  - give a table size at table creation. also give a 
  - record the item sizes as we fill the table.
