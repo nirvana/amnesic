@@ -6,6 +6,8 @@ The Forgetful Cache.
 
 **Amnesic** provides a cache-mediated database layer for highly read data.
 
+### Status:  Under active development. Not usable yet.
+
 ### Purpose
 
 This is meant improve performance in situations where you're frequently needing the 
