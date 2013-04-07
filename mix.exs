@@ -9,13 +9,15 @@ defmodule Amnesic.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    caches = HashDict.new
-    [registered: [:amnesic], mod: { Amnesic, caches }]
+    [registered: [:amnesic]]
   end
 
   # Returns the list of dependencies in the format:
   # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
-    [{:couchie, github: "nirvana/couchie"}]
+    [
+      {:couchie, github: "nirvana/couchie"},
+      {:con_cache, github: "sasa1977/con_cache"}
+    ]
   end
 end

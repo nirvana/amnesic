@@ -32,11 +32,12 @@ This algorithm was chosen for its low complexity.  **amnesic** is meant as a rea
 cache, not an in-memory database.  The goal here is to minimize network connections
 to read data out of a database / memcached. 
 
-All access is thru a single gen_server so this is a serialized bottleneck. However
-because this gen_server *only* manages the cache, it is hoped it won't be a bottleneck.
+All access to the cache and to the database are done in the scope of the calling 
+process.  This is a library, not an applicaiton. 
 
-Requests to the database on a cache miss, and writes to the db are all done in the
-scope of the calling process.  Effectively, this is concurrent i/o & evented cache.
+During development of a custom version of this, ConCache [https://github.com/sasa1977/con_cache] 
+was released, and so Amnesic is essentialy a wrapper around ConCache with access
+to the database provided by Couchie. 
 
 ### Usage
 
@@ -44,10 +45,6 @@ API TBD
 	
 ### Performance
 
-Not yet tested.
+Not yet tested.  However, an in-memory ETS should always be faster than a database 
+request over the network.
 
-Looking at the performance of HashDict, it appears that integer keys are most performant, 
-while string, binary and list keys are acceptable.  Everything is pretty fast up to about
-100,000 items in the cache, at which point you're looking at potentially tens of milliseconds
-of time to fetch a result, and it might be worthwhile to go over the network to the authoritative
-data source, depending on how fast it is. 
